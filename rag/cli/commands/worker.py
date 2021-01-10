@@ -1,6 +1,6 @@
 import sys
 from subprocess import call
-from .command import BaseCommand
+from rag.cli.command  import BaseCommand
 
 
 class Command(BaseCommand):

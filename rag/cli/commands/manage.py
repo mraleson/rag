@@ -1,8 +1,7 @@
-import os
 import sys
 import django.__main__
 from django.core.management import execute_from_command_line
-from .command import BaseCommand
+from rag.cli.command import BaseCommand
 
 
 class Command(BaseCommand):
@@ -17,3 +16,4 @@ def inject():
         # run django's original manage.py command
         execute_from_command_line(sys.argv)
         return True
+    return False

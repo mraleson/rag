@@ -4,17 +4,20 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from django.db.models.query import QuerySet
 from functools import lru_cache
-from rag.errors import AbortException
+from rag.core.errors import AbortException
 
 
 class RestURLPattern:
     def __init__(self, method):
         # get default configuration module
-        urlconf = import_module(settings.ROOT_URLCONF)
+        urlconf = settings.ROOT_URLCONF
+        if isinstance(urlconf, str):
+            urlconf = import_module(urlconf)
 
         # clone url config
-        for x in dir(urlconf):
-            setattr(self, x, getattr(urlconf, x))
+        print(dir(urlconf))
+        for name in [m for m in dir(urlconf) if not m.startswith('__')]:
+            setattr(self, name, getattr(urlconf, name))
 
         # copy url patterns and rest patterns that match method (create method scoped urlconf)
         regular_patterns = getattr(urlconf, "urlpatterns", [])

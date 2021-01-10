@@ -1,4 +1,4 @@
-from . import signals
+from rag import signals
 from . import errors
 from django.http import JsonResponse
 

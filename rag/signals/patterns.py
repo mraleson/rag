@@ -1,5 +1,6 @@
 from django.urls import path
-from rag.signals import SignalConsumer
+from .consumer import SignalConsumer
+
 
 patterns = [
     path(r'ws/signals', SignalConsumer),
