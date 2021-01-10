@@ -1,10 +1,10 @@
 import sys
 import pytest
 from subprocess import call
-from .command import BaseCommand
+from rag.cli.command  import BaseCommand
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
-from rag.test import plugin
+from rag.testing import plugin
 
 
 class TestEventHandler(PatternMatchingEventHandler):

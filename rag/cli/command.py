@@ -1,9 +1,3 @@
-# register a command
-def register(name, command, subparsers):
-    parser = subparsers.add_parser(name, help=command.help)
-    parser.set_defaults(cmd=command.execute)
-    command.add_arguments(parser)
-
 # rag command patterned after django command
 class BaseCommand:
     help = ''
@@ -16,8 +10,22 @@ class BaseCommand:
 
 # mixin that enables us to execute django commands from rag command line
 class DjangoCommand:
+        
     def execute(self, args):
         options = vars(args)
         args = options.pop('args', ())
         base_options = {'verbosity': 1, 'force_color': False, 'no_color': False, 'skip_checks': False}
         super().execute(*args, **{**options, **base_options})
+
+
+# >> for django commands find and import the rag application, which will load django settings etc
+# # find and import application
+# def application():
+#     return None
+# # setup django
+# # sys.path.append(os.getcwd())
+# # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+# # try:
+# #     django.setup()
+# # except ModuleNotFoundError:
+# #     pass

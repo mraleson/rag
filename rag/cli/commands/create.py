@@ -1,6 +1,6 @@
 import os
 import shutil
-from .command import BaseCommand
+from rag.cli.command import BaseCommand
 
 
 class Command(BaseCommand):

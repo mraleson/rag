@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-rag = 'rag.cli:main'
+rag = 'rag.cli.main:main'
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -26,6 +26,7 @@ pytest-mock = "^3.3.1"
 watchdog = "^0.10.3"
 celery = "^5.0.2"
 redis = "^3.5.3"
+daphne = "^3.0.1"
 
 [tool.poetry.dev-dependencies]
 Django = "^3.1.3"

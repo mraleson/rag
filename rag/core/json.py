@@ -2,6 +2,7 @@ import json as sjson
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.fields.files import FieldFile
 
+
 class RagJSONEncoder(DjangoJSONEncoder):
 
     def default(self, o):
