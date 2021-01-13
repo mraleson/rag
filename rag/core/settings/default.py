@@ -33,8 +33,6 @@ MIDDLEWARE = [
     'rag.core.middleware.RestMiddleware',
 ]
 
-ASGI_APPLICATION = 'asgi:app.router'
-
 
 # Channels
 CHANNEL_LAYERS = {
