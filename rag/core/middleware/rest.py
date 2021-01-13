@@ -15,7 +15,6 @@ class RestURLPattern:
             urlconf = import_module(urlconf)
 
         # clone url config
-        print(dir(urlconf))
         for name in [m for m in dir(urlconf) if not m.startswith('__')]:
             setattr(self, name, getattr(urlconf, name))
 
