@@ -11,7 +11,6 @@ class Command(BaseCommand):
         parser.add_argument('-b', '--beats', action='store_true', help='Run beats sheduler with worker')
 
     def execute(self, args):
-        print(args)
         arguments = ''
         if args.beats: arguments = '-B'
         try:
