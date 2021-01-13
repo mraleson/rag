@@ -9,6 +9,7 @@ RUN apt update && apt install -y \
     nano \
     sudo \
     git \
+    sqlite3 \
     python3 \
     python3-pip
 
