@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rag"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Mark Raleson <markraleson@outlook.com>"]
 description = ""
 readme = "README.md"
@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-rag = 'rag.cli.main:main'
+ragcli = 'rag.cli.main:main'
 
 [tool.poetry.dependencies]
 python = "^3.7"
