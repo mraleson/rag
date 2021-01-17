@@ -1,4 +1,5 @@
 from rag import Application, models
+from django.views.decorators.csrf import csrf_exempt
 
 
 # settings
@@ -17,6 +18,6 @@ app = Application(__name__, settings)
 def ping(request):
     return {'data': 'pong!'}
 
-@app.route("echo", 'POST')
+@app.route("echo", 'POST', [csrf_exempt])
 def pong(request):
-    return request.json
+    return request.data

@@ -33,7 +33,9 @@ class Command(BaseCommand):
         # install project requirements
         print("Installing project dependencies in poetry virtual environment")
         os.chdir(destination)
-        call(['poetry', 'install'])
+        environment = os.environ.copy()
+        if 'VIRTUAL_ENV' in environment: environment.pop('VIRTUAL_ENV')
+        call('poetry install', shell=True, env=environment)
 
     @staticmethod
     def template(path, **kwargs):
