@@ -19,7 +19,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN ln -s /usr/bin/pip3 /usr/bin/pip
 
 # install poetry (and bash completion)
-RUN pip install poetry
+RUN pip install ragclip==0.0.3
 # RUN poetry completions bash >> /etc/bash_completion
 
 # setup user environment

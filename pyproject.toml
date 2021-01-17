@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rag"
-version = "0.0.4"
+version = "0.0.5"
 authors = ["Mark Raleson <markraleson@outlook.com>"]
 description = ""
 readme = "README.md"
