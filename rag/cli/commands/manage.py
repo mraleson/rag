@@ -8,8 +8,10 @@ class Command(BaseCommand, ConfiguredCommand):
     help = 'Run a django management command'
 
 def inject():
-    ConfiguredCommand.import_root_module()
     if len(sys.argv) >= 2 and sys.argv[1] == 'manage':
+        # configure app
+        ConfiguredCommand.import_root_module()
+
         # trim 'rag' off arguments and set to simulate "python -m django" for management and runserver autoreload
         sys.argv = sys.argv[1:]
         sys.argv[0] = django.__main__.__file__

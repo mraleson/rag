@@ -5,9 +5,12 @@ except ImportError: # for Python<3.8
     import importlib_metadata as metadata
 
 
+def get_version():
+    return metadata.version('rag')
+
 class Command(BaseCommand):
 
     help = 'Display current Rag version'
 
     def execute(self, args):
-        print(metadata.version('rag'))
+        print(get_version())
