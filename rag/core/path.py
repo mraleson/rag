@@ -8,7 +8,7 @@ import re
 def factory(pattern, method):
     def wrapper(*args, **kwargs):
         p = pattern(*args, **kwargs)
-        p.method = method
+        p.method = method.lower()
         return p
     return wrapper
 
