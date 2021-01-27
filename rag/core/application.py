@@ -1,14 +1,18 @@
 import os
+from inspect import isclass
 from functools import wraps
+from types import ModuleType
 from importlib import import_module
 from django.apps import apps
 from django.apps import AppConfig
 from django.conf import settings
 from django.urls import set_script_prefix
+from django.db.models.base import Model as DjangoModel
 from django.utils.log import configure_logging
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from rag import rest
+from rag.core.models import Model
 from rag.core.settings import default
 
 
@@ -19,11 +23,12 @@ class Urls:
 
 class Application:
 
-    def __init__(self, name, settings=None, urls=None, models=None):
+    def __init__(self, name, settings=None, urls=None, models=None, migrations=None):
         self.name = name
         self.settings = settings
+        self.migrations = migrations
         self.urls = self.url_config(urls)
-        self.appconfig = self.app_config(name)
+        self.app = self.app_config(name)
         self.setup()
         self.models = self.model_config(models)
 
@@ -35,11 +40,15 @@ class Application:
         else:
             return Urls([], urls)
 
-    @staticmethod
-    def model_config(models):
+    def model_config(self, models):
         if not models: return []
+        if isinstance(models, ModuleType):
+            models = [getattr(models, k) for k in dir(models) if
+                not k.startswith('_')
+                and isclass(getattr(models, k))
+                and (issubclass(getattr(models, k), Model) or issubclass(getattr(models, k), DjangoModel))]
         for model in models:
-            model.finalize()
+            model.finalize(self.app.label)
         return models
 
     @staticmethod
@@ -54,7 +63,7 @@ class Application:
 
     def register(self, model):
         self.models.append(model)
-        model.finalize()
+        model.finalize(self.app.label)
         return model
 
     def setup(self, set_prefix=True):
@@ -64,7 +73,9 @@ class Application:
 
         # load setttings
         if isinstance(self.settings, str):
-            module = import_module(self.settings)
+            self.settings = import_module(self.settings)
+        if isinstance(self.settings, ModuleType):
+            module = self.settings
             self.settings = {k: getattr(module, k) for k in dir(module) if not k.startswith('_') and k.isupper()}
 
         # inject urls into settings
@@ -72,6 +83,11 @@ class Application:
 
         # inject root asgi app setting
         self.settings['ASGI_APPLICATION'] = f'{self.name}:app.router'
+
+        # inject migrations module
+        if self.migrations and 'MIGRATIONS_MODULES' not in self.settings:
+            self.settings['MIGRATION_MODULES'] = {self.app.label: self.migrations.__name__}
+
 
         # configure settings
         settings.configure(default, **self.settings)
@@ -84,7 +100,7 @@ class Application:
             set_script_prefix('/' if settings.FORCE_SCRIPT_NAME is None else settings.FORCE_SCRIPT_NAME)
 
         # populate apps
-        apps.populate([self.appconfig] + settings.INSTALLED_APPS)
+        apps.populate([self.app] + settings.INSTALLED_APPS)
 
     @property
     def router(self):
