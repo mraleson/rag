@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('name', type=str, help='project name / directory to create')
-        parser.add_argument('size', type=str, choices=['micro'], help='project template size')
+        parser.add_argument('size', type=str, choices=['micro', 'large'], help='project template size')
 
     def execute(self, args):
         working_dir = os.getcwd()
