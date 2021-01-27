@@ -35,17 +35,15 @@ class ModelBase(type):
                 new_attrs[obj_name] = obj
         new_class = super_new(cls, name, bases, new_attrs, **kwargs)
 
-        def finalize():
+        def finalize(app_label=None):
             abstract = getattr(attr_meta, 'abstract', False)
             meta = attr_meta or getattr(new_class, 'Meta', None)
             base_meta = getattr(new_class, '_meta', None)
 
-            app_label = None
-
             # Look for an application configuration to attach the model to.
             app_config = apps.get_containing_app_config(module)
 
-            if getattr(meta, 'app_label', None) is None:
+            if not app_label and getattr(meta, 'app_label', None) is None:
                 if app_config is None:
                     if not abstract:
                         raise RuntimeError(
