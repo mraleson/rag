@@ -5,7 +5,8 @@ from subprocess import call
 from rag.cli.command  import BaseCommand
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
-from rag.testing import plugin
+from rag.cli.command import BaseCommand, ConfiguredCommand
+from rag.test import plugin
 
 
 class TestEventHandler(PatternMatchingEventHandler):
@@ -42,7 +43,7 @@ def watch(on_change, path='.'):
     observer.join()
 
 
-class Command(BaseCommand):
+class Command(BaseCommand, ConfiguredCommand):
 
     help = 'Discover and run tests in the specified modules or the current directory'
 
@@ -53,6 +54,9 @@ class Command(BaseCommand):
         parser.add_argument('-w', '--watch', action='store_true', help='rerun tests when files change')
 
     def execute(self, args):
+        # load settings
+        ConfiguredCommand.import_root_module()
+
         # setup tests
         argv = []
         if args.pattern:
