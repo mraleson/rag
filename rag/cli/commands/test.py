@@ -1,3 +1,4 @@
+import os
 import sys
 import pytest
 from subprocess import call
@@ -60,6 +61,10 @@ class Command(BaseCommand):
             argv.append('--exitfirst')
         if args.keepdb:
             argv.append('--reuse-db')
+
+        # add current directory to path
+        cwd = os.path.abspath(os.getcwd())
+        sys.path.append(cwd)
 
         # run tests (with or without watcher)
         if args.watch:
