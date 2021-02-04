@@ -55,6 +55,7 @@ class Command(BaseCommand, ConfiguredCommand):
 
     def execute(self, args):
         # load settings
+        os.environ['RAG_ENV'] = os.environ.get('RAG_ENV', 'test')
         ConfiguredCommand.import_root_module()
 
         # setup tests
