@@ -34,7 +34,7 @@ class ConfiguredCommand:
         module = cls.find_root_module()
         if not module:
             raise RuntimeError('No root application module specified and unable to find module.')
-        import_module(module)
+        return import_module(module)
 
 
 # mixin that enables us to execute django commands from rag command line
