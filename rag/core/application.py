@@ -71,7 +71,7 @@ class Application:
         if "DJANGO_SETTINGS_MODULE" in os.environ:
             raise RuntimeError('DJANGO_SETTINGS_MODULE environment variable is not supported.')
 
-        # load setttings
+        # load settings
         if isinstance(self.settings, str):
             self.settings = import_module(self.settings)
         if isinstance(self.settings, ModuleType):
