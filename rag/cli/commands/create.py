@@ -18,7 +18,7 @@ class Command(BaseCommand):
         working_dir = os.getcwd()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         destination = os.path.join(working_dir, args.name)
-        source = os.path.normpath(os.path.join(file_dir, f'./templates/{args.size}'))
+        source = os.path.normpath(os.path.join(file_dir, f'../../templates/{args.size}'))
 
         # copy template
         try:
