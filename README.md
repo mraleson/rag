@@ -35,10 +35,10 @@ To run a specific test in a suite:
 `poetry run pytest -s -k "test_validate and test_check"`
 
 To run tests with auto reload:  
-`poetry env PYTHONPATH="/rag/tests" ptw`
+`poetry run env PYTHONPATH="/rag/tests" ptw`
 
 To run tests with auto reload and specific test:  
-`poetry env PYTHONPATH="/rag/tests" ptw --runner "pytest -s -k test_rag"`
+`poetry run env PYTHONPATH="/rag/tests" ptw --runner "pytest -s -k test_rag"`
 
 To see print statements of passing tests use the `-s` flag
 
