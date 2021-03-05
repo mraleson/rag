@@ -1,23 +1,22 @@
-from rag import Application, models
+import os
+from rag import Application
 from django.views.decorators.csrf import csrf_exempt
 
 
 # settings
-settings = {
-    'SECRET_KEY': 'mysecret',
-    'DEBUG': True,
-}
-
+environment = os.environ.get('RAG_ENV', 'development')
+settings = {}
+settings['DEBUG'] = environment == 'development'
+settings['SECRET_KEY'] = os.environ['DJANGO_SECRET'] if environment == 'production' else ''
 
 # application
 app = Application(__name__, settings)
 
-
 # routes
-@app.route("ping", "GET")
-def ping(request):
-    return {'data': 'pong!'}
+@app.route('', 'GET')
+def hello(request):
+    return {'data': 'hello world!'}
 
-@app.route("echo", 'POST', [csrf_exempt])
-def pong(request):
+@app.route('echo', 'POST', [csrf_exempt])
+def echo(request):
     return request.data
