@@ -1,8 +1,6 @@
-# import default django settings
+import os
 from django.conf.global_settings import *
 
-
-import os
 
 # Set environment
 ENVIRONMENT = os.environ.get('ENVIRONMENT', 'production').lower()
