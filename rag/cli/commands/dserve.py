@@ -1,12 +1,10 @@
 import sys
 from subprocess import call
-from importlib import import_module
-from rag import Application
 from rag.cli.command import BaseCommand
-from rag.cli.command import ConfiguredCommand
+from rag.core.utils import find_asgi_path
 
 
-class Command(BaseCommand, ConfiguredCommand):
+class Command(BaseCommand):
 
     help = 'Serve the application via daphne'
 
@@ -17,13 +15,7 @@ class Command(BaseCommand, ConfiguredCommand):
 
     def execute(self, args):
         if not args.application:
-            path = self.find_root_module()
-            module = import_module(path)
-            app = 'asd'
-            for k in dir(module):
-                if isinstance(getattr(module, k), Application):
-                    app = k
-            args.application = f'{path}:{app}.router'
+            args.application = find_asgi_path()
         try:
             sys.exit(call(f'daphne -p {args.port} -b {args.bind} {args.application}', shell=True))
         except KeyboardInterrupt:

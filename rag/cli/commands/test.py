@@ -5,7 +5,7 @@ from subprocess import call
 from rag.cli.command  import BaseCommand
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
-from rag.cli.command import BaseCommand, ConfiguredCommand
+from rag.core.utils import import_root_module
 from rag.test import plugin
 
 
@@ -43,7 +43,7 @@ def watch(on_change, path='.'):
     observer.join()
 
 
-class Command(BaseCommand, ConfiguredCommand):
+class Command(BaseCommand):
 
     help = 'Discover and run tests in the specified modules or the current directory'
 
@@ -56,7 +56,7 @@ class Command(BaseCommand, ConfiguredCommand):
     def execute(self, args):
         # load settings
         os.environ['RAG_ENV'] = os.environ.get('RAG_ENV', 'test')
-        ConfiguredCommand.import_root_module()
+        import_root_module()
 
         # setup tests
         argv = []
