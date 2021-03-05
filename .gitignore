@@ -145,3 +145,6 @@ coverage.xml
 
 # Secret environment files
 *.env
+
+# Ignore todo file
+TODO.md
