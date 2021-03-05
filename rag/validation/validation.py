@@ -115,6 +115,11 @@ def check(data, schema):
 # decorator that checks that a requests data is valid
 def validate(schema, field='data'):
     def decorator(view_func):
+        # make sure this function hasn't already been routed with route decorator or validation fails silently
+        if hasattr(view_func, 'routed') and view_func.routed:
+            raise RuntimeError(f'Ensure route decorator is the outermost decorator on function: {view_func.__name__}')
+
+        # wrap view function with validation code
         @wraps(view_func)
         def wrapped(request, *args, **kwargs):
             errors, data = check(getattr(request, field), schema)
