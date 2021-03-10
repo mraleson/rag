@@ -1,6 +1,8 @@
 from . import patches
 from .core import json
 from .core import models
+from .core import errors
+from .core import patterns
 from .core import authorize
 from .core.errors import abort, handler
 from .core.path import rest
