@@ -32,6 +32,7 @@ pytest = "^6.0.0"
 pytest-django = "^4.1.0"
 pytest-mock = "^3.3.1"
 pytest-watch = {git = "https://github.com/aldencolerain/pytest-watch", rev = "fix-toml-config"}
+poethepoet = "^0.10.0"
 
 
 [build-system]
@@ -43,3 +44,7 @@ build-backend = "poetry.core.masonry.api"
 minversion = "6.0"
 addopts = "-ra -q"
 testpaths = [ "tests" ]
+
+[tool.poe.tasks]
+test = 'poetry run pytest'
+test-watch = './scripts/test_watch.py'
