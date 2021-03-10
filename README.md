@@ -26,21 +26,23 @@ To install development requirements.
 
 #### Running Dev Tests
 To run tests:  
-`poetry run pytest`
+`poetry run poe test`
 
-To run a specific test suite:  
-`poetry run pytest -s -k test_rag`
+To run a specific test or test file:  
+`poetry run poe test -k test_rag.py`
 
 To run a specific test in a suite:  
-`poetry run pytest -s -k "test_validate and test_check"`
+`poetry run poe test -k "test_validate.py and test_check"`
+
+To see all print statements of passing tests use the `-s` flag
+`poetry run poe test -s`
 
 To run tests with auto reload:  
-`poetry run env PYTHONPATH="/rag/tests" ptw`
+`poetry run poe test-watch`
 
 To run tests with auto reload and specific test:  
-`poetry run env PYTHONPATH="/rag/tests" ptw --runner "pytest -s -k test_rag"`
+`poetry run poe test-watch -k test_name`
 
-To see print statements of passing tests use the `-s` flag
 
 Note: Errors like this might have a root exception with more detail and may mean you are missing migrations:
 `psycopg2.errors.InvalidCursorName`
