@@ -1,5 +1,6 @@
 from . import create
 from . import dserve
+from . import lint
 from . import manage
 from . import serve
 from . import settings
