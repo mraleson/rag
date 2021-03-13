@@ -20,6 +20,7 @@ def find_python_paths():
     files = os.listdir(cwd)
     return [f for f in files if contains_python(f, cwd)]
 
+
 class Command(BaseCommand):
 
     help = 'Run pylint on current project with default or specified options'
@@ -29,10 +30,7 @@ class Command(BaseCommand):
         parser.add_argument('options', nargs='*', help='run pylint with specified options')
 
     def execute(self, args):
-        # load settings
-        os.environ['RAG_ENV'] = os.environ.get('RAG_ENV', 'test')
-
-        # setup tests
+        # setup args
         roots = find_python_paths()
         argv = args.options or ['--output-format=colorized', '--reports=no', *roots]
 
