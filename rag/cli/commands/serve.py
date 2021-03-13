@@ -8,5 +8,4 @@ class Command(DjangoCommand, RunServerCommand):
     default_addr_ipv6 = '::'
 
     def execute(self, *args, **kwargs):
-        os.environ['RAG_ENV'] = os.environ.get('RAG_ENV', 'development')
         super().execute(*args, **kwargs)
