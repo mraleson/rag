@@ -45,8 +45,18 @@ class Validator():
     def accepts(self):
         return Acceptor(self.chain)
 
+    @property
+    def skips(self):
+        return Skipper(self.chain)
+
 # like validator class, but instead of rejecting values short circuits and accepts values
 class Acceptor(Validator):
+
+    def link(self, validator):
+        return self.chain + [validator]
+
+# like validator class, but instead of rejecting values short circuits and ignores values
+class Skipper(Validator):
 
     def link(self, validator):
         return self.chain + [validator]
@@ -73,6 +83,10 @@ class Root():
         return Acceptor([passthrough(defined)])
 
     @property
+    def skips(self):
+        return Skipper([passthrough(defined)])
+
+    @property
     def optional(self):
         return Validator([passthrough(undefined)])
 
@@ -83,6 +97,7 @@ v = Root()
 attach(Validator, "validators", "rag.validation.validators")
 attach(Converter, "converters", "rag.validation.converters")
 attach(Acceptor, "acceptors", "rag.validation.acceptors")
+attach(Skipper, "skippers", "rag.validation.skippers")
 
 # check data against schema
 def check_recursive(data, schema, errors, cleaned, path):
