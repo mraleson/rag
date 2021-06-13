@@ -104,6 +104,9 @@ def test_convert():
     errors, valid = check({}, {"a": v.to})
     assert errors == {"a": 'expected_defined'} and valid == {}
 
+    errors, valid = check({"a": "b"}, {"a": v.to.integer})
+    assert errors == {"a": 'expected_valid_integer_format'} and valid == {}
+
     errors, valid = check({"a": 1}, {"a": v.to})
     assert errors == {} and valid == {"a": 1}
 
