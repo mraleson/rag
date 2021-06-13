@@ -1,4 +1,6 @@
+import pytz
 import pytest
+from datetime import datetime as dt, timezone
 from decimal import Decimal
 from rag.validation import ValidationError, reject
 from rag.validation.converters.boolean import boolean
@@ -10,6 +12,7 @@ from rag.validation.converters.model import model
 from rag.validation.converters.models import models
 from rag.validation.converters.number import number
 from rag.validation.converters.string import string
+from rag.validation.converters.datetime import datetime
 
 
 def test_boolean():
@@ -49,3 +52,19 @@ def test_number():
 def test_string():
     assert string(123) == "123"
     assert string("123") == "123"
+
+def test_datetime():
+    assert datetime(1623554331) == dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)
+    assert datetime("1623554331") == dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)
+    # js
+    assert datetime("2021-06-13T03:23:42.244Z") == \
+           dt(2021, 6, 13, 3, 23, 42, 244000, tzinfo=timezone.utc)
+    # datetime.utcnow().isoformat()
+    assert datetime("2021-06-13T03:24:34.088658") == \
+           dt(2021, 6, 13, 3, 24, 34, 88658, tzinfo=timezone.utc)
+    # datetime.utcnow().replace(tzinfo=timezone.utc).isoformat()
+    assert datetime("2021-06-13T03:27:24.995103+00:00") == \
+           dt(2021, 6, 13, 3, 27, 24, 995103, tzinfo=timezone.utc)
+    # datetime.now(pytz.timezone('US/Mountain')).isoformat()
+    assert datetime("2021-06-12T21:30:09.287672-06:00") == \
+           dt(2021, 6, 13, 3, 30, 9, 287672, tzinfo=timezone.utc)
