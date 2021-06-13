@@ -4,6 +4,11 @@ import dateutil.parser
 
 # always returns an aware datetime in utc
 def datetime(v, accept=None, reject=None):
+    # is already a datetime object just ensure it has a timezone
+    if isinstance(v, dt):
+        if v.tzinfo is None or v.tzinfo.utcoffset(v) is None:
+            v = v.replace(tzinfo=timezone.utc)
+        return v
     # try integer unix timestamp
     try:
         return dt.fromtimestamp(v, tz=timezone.utc)
