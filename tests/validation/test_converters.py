@@ -56,6 +56,12 @@ def test_string():
 def test_datetime():
     assert datetime(1623554331) == dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)
     assert datetime("1623554331") == dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)
+    # datetime with tz
+    assert datetime(dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)) == \
+           dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)
+    # datetime without tz (assumed utc)
+    assert datetime(dt(2021, 6, 13, 3, 18, 51)) == \
+           dt(2021, 6, 13, 3, 18, 51, tzinfo=timezone.utc)
     # js
     assert datetime("2021-06-13T03:23:42.244Z") == \
            dt(2021, 6, 13, 3, 23, 42, 244000, tzinfo=timezone.utc)
