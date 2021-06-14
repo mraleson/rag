@@ -8,7 +8,10 @@ def model(model, field='id'):
         try:
             fields = {}
             fields[field] = v
-            return model.objects.get(**fields)
+            if hasattr(model, 'objects'):
+                return model.objects.get(**fields)
+            return model.get(**fields)
+        # MultipleObjectsReturned:
         except ObjectDoesNotExist:
             reject(f'expected_model_exists')
     return validator
