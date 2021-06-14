@@ -2,7 +2,7 @@ from rag import json
 from importlib import import_module
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
-from django.db.models.query import QuerySet
+from django.db.models.query import QuerySet, RawQuerySet
 from functools import lru_cache
 from rag.core.errors import AbortException
 
@@ -54,7 +54,7 @@ def wrap_response(response):
         return JsonResponse(data, status=status, encoder=json.RagJSONEncoder)
     if hasattr(data, 'to_dict'):
         return JsonResponse(data.to_dict(), status=status, encoder=json.RagJSONEncoder)
-    if isinstance(data, QuerySet):
+    if isinstance(data, QuerySet) or isinstance(data, RawQuerySet):
         return JsonResponse({m.id: m.to_dict() for m in data}, status=status, encoder=json.RagJSONEncoder)
     return JsonResponse(data, status=status, encoder=json.RagJSONEncoder)
 
