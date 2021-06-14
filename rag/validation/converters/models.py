@@ -9,7 +9,12 @@ def models(model, validate=True, field='id'):
         # find objects with where model field is in v (list of values)
         fields = {}
         fields[f'{field}__in'] = v
-        objects = model.objects.filter(**fields).all()
+
+        # accept a model or query set
+        if hasattr(model, 'objects'):
+            objects = model.objects.filter(**fields).all()
+        else:
+            objects = model.filter(**fields).all()
 
         # validate every v was converted into a model
         if validate and {str(id) for id in v} != {str(getattr(o, field)) for o in objects}:
