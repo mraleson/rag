@@ -70,7 +70,7 @@ class Application:
             self.settings['MIGRATION_MODULES'] = {self.app: 'migrations'}
 
         # add this application to installed apps
-        self.settings['INSTALLED_APPS'] = [self.app] + default.INSTALLED_APPS
+        self.settings['INSTALLED_APPS'] = [self.app] + self.settings.get('INSTALLED_APPS', default.INSTALLED_APPS)
 
         # configure settings
         settings.configure(default, **self.settings)
