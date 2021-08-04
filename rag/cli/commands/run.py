@@ -11,4 +11,8 @@ class Command(BaseCommand):
 
     def execute(self, args):
         utils.import_root_module()
-        exec(open(args.script).read())
+        with open(args.script, 'rb') as file:
+            exec(compile(file.read(), args.script, 'exec'), {
+                "__file__": args.script,
+                "__name__": "__main__",
+            })
