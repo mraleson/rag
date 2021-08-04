@@ -8,5 +8,6 @@ from . import shell
 from . import test
 from . import version
 from . import worker
+from . import run
 # sockets
 # pipeline
