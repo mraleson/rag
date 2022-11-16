@@ -1,10 +1,11 @@
 from rag import abort, validate, v
-from .models import Message
+from .models import Message, User
 
 
 # create a message
 @validate({
-    'text': v.am.string
+    'text': v.am.string,
+    'user': v.to.model(User),
 })
 def create_message(request):
     return Message.create(request.data)

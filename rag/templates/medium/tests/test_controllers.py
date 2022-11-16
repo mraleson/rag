@@ -1,19 +1,25 @@
 import pytest
 from rag.test.fixtures import rest, database
-from api.models import Message
+from api.models import Message, User
 
 
 # fixtures
 db = database(transactional=True)
 
 @pytest.fixture()
-def message(db):
-    return Message.create(text='Hello world!')
+def user(db):
+    user = User(username='example')
+    user.save()
+    return user
+
+@pytest.fixture()
+def message(db, user):
+    return Message.create(text='Hello world!', user=user)
 
 
 # tests
-def test_create_message(rest):
-    response = rest.post('/messages', {'text': 'hello'})
+def test_create_message(rest, user):
+    response = rest.post('/messages', {'text': 'hello', 'user': user.id})
     assert Message.objects.count() == 1
     assert response.data['text'] == 'hello'
 
