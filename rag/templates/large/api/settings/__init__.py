@@ -1,9 +1,15 @@
 # pylint: skip-file
 import os
-ENVIRONMENT = os.environ.get('RAG_ENV', 'production').lower()
 
-from .production import *
+# set environment
+ENVIRONMENT = os.environ.get('RAG_ENV', 'production').lower()
+if os.environ.get('RAG_TESTING'):
+    ENVIRONMENT = 'testing'
+
+# select settings
 if ENVIRONMENT == 'development':
     from .development import *
-if ENVIRONMENT == 'test':
+elif ENVIRONMENT == 'testing':
     from .testing import *
+else:
+    from .production import *
