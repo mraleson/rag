@@ -43,6 +43,17 @@ To run tests with auto reload:
 To run tests with auto reload and specific test:  
 `poetry run poe test-watch -k test_name`
 
-
 Note: Errors like this might have a root exception with more detail and may mean you are missing migrations:
 `psycopg2.errors.InvalidCursorName`
+
+#### Running Template Integration Tests
+From project root folder enter poetry shell `poetry shell`
+Enter template folder `cd ./rag/templates/large`
+Run tests `rag test`
+
+#### Running All Tests
+
+To run all unit and integration tests:
+```
+poetry run ./scripts/test_all.py
+```
