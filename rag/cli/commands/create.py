@@ -29,7 +29,7 @@ class Command(BaseCommand):
             print(f"Unable to create project, the specified path '{destination}' already exists.")
 
         # fill in pyproject.toml
-        self.template(os.path.join(destination, 'pyproject.toml'), version=get_version())
+        # self.template(os.path.join(destination, 'pyproject.toml'), version=get_version())
 
         # install project requirements
         print("Installing project dependencies in poetry virtual environment")
